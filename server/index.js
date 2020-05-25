@@ -27,7 +27,7 @@ server.post("/", (req, res) => {
     from: `${process.env.FROM}`,
     to: `${process.env.TO}`,
     subject: "Message",
-    text: `${req.body}`,
+    text: `<h1 style="color: blue;">Name: ${req.body["First Name"]}</h1>`,
     auth: {
       user: `${process.env.USER}`,
     },
