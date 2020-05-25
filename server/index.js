@@ -19,17 +19,19 @@ let transporter = nodemailer.createTransport({
   },
 });
 server.get("/", (req, res) => {
-  console.log(req.body);
+  res.send("connected");
+});
+
+server.post("/", (req, res) => {
   transporter.sendMail({
     from: `${process.env.FROM}`,
     to: `${process.env.TO}`,
     subject: "Message",
-    text: "I hope this message gets through!",
+    text: `${req.body}`,
     auth: {
       user: `${process.env.USER}`,
     },
   });
-  res.send("connected");
 });
 
 module.exports = server;
