@@ -10,35 +10,25 @@ let transporter = nodemailer.createTransport({
   secure: true,
   auth: {
     type: "OAuth2",
-    clientId: "xxxxxxxxxxx",
-    clientSecret: "xxxxxxxxxx",
+    user: `${process.env.USER}`,
+    clientId: `${process.env.CLIENT_ID}`,
+    clientSecret: `${process.env.CLIENT_SECRET}`,
+    refreshToken: `${process.env.REFRESH_TOKEN}`,
+    accessToken: `${process.env.ACCESS_TOKEN}`,
+    expires: parseInt(process.env.EXPIRES, 10),
   },
 });
-
-// transporter.set("oauth2_provision_cb", (user, renew, callback) => {
-//   let accessToken = userTokens[user];
-//   if (!accessToken) {
-//     return callback(new Error("Unknown user"));
-//   } else {
-//     return callback(null, accessToken);
-//   }
-// });
-
 server.get("/", (req, res) => {
   console.log(req.body);
-  //   res.location("back");
-  //   transporter.sendMail({
-  //     from: "xxxxxxxxxxxx",
-  //     to: "xxxxxxxxxxxxx",
-  //     subject: "Message",
-  //     text: "I hope this message gets through!",
-  //     auth: {
-  //       user: "xxxxxxxxxxxx",
-  // refreshToken: '1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx',
-  // accessToken: 'ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x',
-  // expires: 1484314697598
-  // },
-  //   });
+  transporter.sendMail({
+    from: `${process.env.FROM}`,
+    to: `${process.env.TO}`,
+    subject: "Message",
+    text: "I hope this message gets through!",
+    auth: {
+      user: `${process.env.USER}`,
+    },
+  });
   res.send("connected");
 });
 
